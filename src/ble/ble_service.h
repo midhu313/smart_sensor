@@ -32,7 +32,7 @@ struct bt_service_cb {
 	void (*ntf_changed)(bool enabled);
 
 	/**
-	 * @brief sevice write callback
+	 * @brief service write callback
 	 *
 	 * @param request control point request code
 	 *
@@ -41,7 +41,16 @@ struct bt_service_cb {
 	 *         listeners in case of multiple listeners
 	 * @return other negative error codes will result in immediate error response
 	 */
-	int (*ctrl_point_write)(uint8_t request);
+	int (*write_val)(const uint8_t *data,uint16_t len);
+
+	/**
+	 * @brief service read callback
+	 * @param buff buffer
+	 * @param len length of the buffer
+	 * 
+	 * @return 
+	 */
+	int (*read_val)(uint8_t *buff,uint16_t len);
 
 	/** Internal member to form a list of callbacks */
 	sys_snode_t _node;

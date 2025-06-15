@@ -47,8 +47,9 @@ static ssize_t ctrl_point_write(struct bt_conn *conn, const struct bt_gatt_attr 
 	LOG_INF("CTRL Point Written %d", len);
 
 	SYS_SLIST_FOR_EACH_CONTAINER(&service_cbs, listener, _node) {
-		if (listener->ctrl_point_write) {
-			err = listener->ctrl_point_write(*((uint8_t *)buf));
+		if (listener->write_val) {
+			const uint8_t *in_buf = buf;
+			err = listener->write_val(in_buf,len);
 			/* If we get an error other than ENOTSUP then immediately
 			 * break the loop and return a generic gatt error, assuming this
 			 * listener supports this request code, but failed to serve it

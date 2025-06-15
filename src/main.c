@@ -169,14 +169,14 @@ static void notify_work_handler(struct k_work *work)
 	k_work_reschedule(k_work_delayable_from_work(work), K_MSEC(NOTIFY_INTERVAL));
 }
 
-static int bt_hrs_ctrl_point_write(uint8_t request)
+static int bt_hrs_ctrl_point_write(const uint8_t *buf,uint16_t len)
 {
-	printk("HRS Control point request: %d\n", request);
+	printk("HRS Control point request: \n");
 	return 0;
 }
 
 static struct bt_service_cb service_cb = {
-	.ctrl_point_write = bt_hrs_ctrl_point_write,
+	.write_val = bt_hrs_ctrl_point_write,
 };
 
 
